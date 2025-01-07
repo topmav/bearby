@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_07_000704) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_07_042456) do
   create_schema "auth"
   create_schema "extensions"
   create_schema "graphql"
@@ -66,6 +66,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_07_000704) do
     t.timestamptz "updated_at", null: false
   end
 
+  create_table "project_services", force: :cascade do |t|
+    t.bigint "project_id", null: false
+    t.bigint "service_id", null: false
+    t.timestamptz "created_at", null: false
+    t.timestamptz "updated_at", null: false
+    t.index ["project_id", "service_id"], name: "index_project_services_on_project_id_and_service_id", unique: true
+    t.index ["project_id"], name: "index_project_services_on_project_id"
+    t.index ["service_id"], name: "index_project_services_on_service_id"
+  end
+
   create_table "projects", force: :cascade do |t|
     t.bigint "agency_id", null: false
     t.text "title"
@@ -90,6 +100,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_07_000704) do
 
   add_foreign_key "agency_services", "agencies"
   add_foreign_key "agency_services", "services"
+  add_foreign_key "project_services", "projects"
+  add_foreign_key "project_services", "services"
   add_foreign_key "projects", "agencies"
   add_foreign_key "projects", "industries"
 end
