@@ -8,6 +8,7 @@ gem "propshaft"
 gem "pg", "~> 1.1"
 gem "aws-sdk-s3"
 gem "image_processing", "~> 1.2"
+gem "active_storage_validations"
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
