@@ -1,0 +1,50 @@
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+  <div class="flex justify-between items-center py-6">
+    <h1 class="text-2xl font-semibold">Agencies</h1>
+    <%= link_to "New Agency", new_admin_agency_path, class: "bg-blue-600 text-white px-4 py-2 rounded" %>
+  </div>
+
+  <div class="overflow-x-auto shadow ring-1 ring-black ring-opacity-5 rounded-lg">
+    <table class="min-w-full divide-y divide-gray-300">
+      <thead class="bg-gray-50">
+        <tr>
+          <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Logo</th>
+          <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+          <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Website</th>
+          <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Company Size</th>
+          <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Projects</th>
+          <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">City</th>
+          <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">State</th>
+          <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Updated</th>
+          <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created</th>
+          <th class="relative px-3 py-3"></th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200 bg-white">
+        <% @agencies.each do |agency| %>
+          <tr>
+            <td class="px-3 py-4 whitespace-nowrap">
+              <% if agency.logo.attached? %>
+                <%= image_tag agency.logo.variant(resize_to_fill: [180, 90]).processed %>
+              <% else %>
+                No logo
+              <% end %>
+            </td>
+            <td class="px-3 py-4"><%= agency.name %></td>
+            <td class="px-3 py-4"><%= agency.website %></td>
+            <td class="px-3 py-4"><%= agency.company_size %></td>
+            <td class="px-3 py-4"><%= agency.projects.size %></td>
+            <td class="px-3 py-4"><%= agency.city %></td>
+            <td class="px-3 py-4"><%= agency.state %></td>
+            <td class="px-3 py-4"><%= agency.updated_at.strftime("%Y-%m-%d %H:%M") %></td>
+            <td class="px-3 py-4"><%= agency.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+            <td class="px-3 py-4 whitespace-nowrap text-right">
+              <%= link_to "Show", admin_agency_path(agency), class: "text-blue-500 hover:text-blue-700 mr-2" %>
+              <%= link_to "Edit", edit_admin_agency_path(agency), class: "text-blue-500 hover:text-blue-700" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

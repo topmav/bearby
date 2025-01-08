@@ -1,0 +1,91 @@
+<%= form_with(model: [:admin, @agency], local: true) do |f| %>
+  <% if @agency.errors.any? %>
+    <div class="bg-red-100 text-red-600 p-3 mb-4">
+      <p><%= pluralize(@agency.errors.count, "error") %> prohibited this agency from being saved:</p>
+      <ul>
+        <% @agency.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-4">
+    <%= f.label :name, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :name, class: "mt-1 block w-full border-gray-300 rounded-md" %>
+  </div>
+
+  <div class="mb-4">
+    <%= f.label :address, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :address, class: "mt-1 block w-full border-gray-300 rounded-md" %>
+  </div>
+
+  <div class="grid grid-cols-2 gap-4">
+    <div class="mb-4">
+      <%= f.label :city, class: "block text-sm font-medium text-gray-700" %>
+      <%= f.text_field :city, class: "mt-1 block w-full border-gray-300 rounded-md" %>
+    </div>
+
+    <div class="mb-4">
+      <%= f.label :state, class: "block text-sm font-medium text-gray-700" %>
+      <%= f.text_field :state, class: "mt-1 block w-full border-gray-300 rounded-md" %>
+    </div>
+  </div>
+
+  <div class="mb-4">
+    <%= f.label :zip_code, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :zip_code, class: "mt-1 block w-full border-gray-300 rounded-md" %>
+  </div>
+
+  <div class="mb-4">
+    <%= f.label :company_size, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.select :company_size, ["Small", "Medium", "Large"], {}, class: "mt-1 block w-full border-gray-300 rounded-md" %>
+  </div>
+
+  <div class="flex items-center mb-4">
+    <%= f.check_box :in_business, class: "mr-2" %>
+    <%= f.label :in_business, class: "text-sm font-medium text-gray-700" %>
+  </div>
+
+  <div class="flex items-center mb-4">
+    <%= f.check_box :full_service_agency, class: "mr-2" %>
+    <%= f.label :full_service_agency, class: "text-sm font-medium text-gray-700" %>
+  </div>
+
+  <div class="mb-4">
+    <%= f.label :phone, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.telephone_field :phone, class: "mt-1 block w-full border-gray-300 rounded-md" %>
+  </div>
+
+  <div class="mb-4">
+    <%= f.label :website, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.url_field :website, class: "mt-1 block w-full border-gray-300 rounded-md" %>
+  </div>
+
+  <div class="mb-4">
+    <%= f.label :description, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_area :description, rows: 3, class: "mt-1 block w-full border-gray-300 rounded-md" %>
+  </div>
+
+  <div class="grid grid-cols-2 gap-4">
+    <div class="mb-4">
+      <%= f.label :lat, class: "block text-sm font-medium text-gray-700" %>
+      <%= f.number_field :lat, step: :any, class: "mt-1 block w-full border-gray-300 rounded-md" %>
+    </div>
+
+    <div class="mb-4">
+      <%= f.label :long, class: "block text-sm font-medium text-gray-700" %>
+      <%= f.number_field :long, step: :any, class: "mt-1 block w-full border-gray-300 rounded-md" %>
+    </div>
+  </div>
+
+  <div class="mb-4">
+    <%= f.label :logo, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.file_field :logo, class: "mt-1 block" %>
+  </div>
+
+  <div class="flex space-x-4">
+    <%= f.submit class: "bg-blue-600 text-white px-4 py-2 rounded" %>
+    <%= link_to "Back", admin_agencies_path, class: "bg-gray-200 text-black px-4 py-2 rounded" %>
+  </div>
+<% end %>
