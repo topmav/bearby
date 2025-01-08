@@ -12,12 +12,15 @@
 
 ActiveRecord::Schema[8.0].define(version: 2025_01_07_231315) do
   create_schema "auth"
+  create_schema "cable"
+  create_schema "cache"
   create_schema "extensions"
   create_schema "graphql"
   create_schema "graphql_public"
   create_schema "pgbouncer"
   create_schema "pgsodium"
   create_schema "pgsodium_masks"
+  create_schema "queue"
   create_schema "realtime"
   create_schema "storage"
   create_schema "vault"

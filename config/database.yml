@@ -16,8 +16,31 @@ development:
 
 test:
   <<: *default
-  database: <%= Rails.application.credentials.supabase[:test_database] %>
+  database: storage/test.sqlite3
 
 production:
-  <<: *default
+  primary: &primary_production
+    <<: *default
+    # Use the "public" schema for primary
+    schema_search_path: "public"
 
+  cache:
+    <<: *primary_production
+    # Reuse the same physical DB but store cache data in "cache" schema
+    database: <%= Rails.application.credentials.supabase[:database] %>
+    schema_search_path: "cache"
+    migrations_paths: db/cache_migrate
+
+  queue:
+    <<: *primary_production
+    # Reuse the same physical DB but store queue data in "queue" schema
+    database: <%= Rails.application.credentials.supabase[:database] %>
+    schema_search_path: "queue"
+    migrations_paths: db/queue_migrate
+
+  cable:
+    <<: *primary_production
+    # Reuse the same physical DB but store cable data in "cable" schema
+    database: <%= Rails.application.credentials.supabase[:database] %>
+    schema_search_path: "cable"
+    migrations_paths: db/cable_migrate
