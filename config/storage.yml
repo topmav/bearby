@@ -6,13 +6,13 @@ local:
   service: Disk
   root: <%= Rails.root.join("storage") %>
 
-supabase_s3:
+s3:
   service: S3
-  access_key_id: <%= Rails.application.credentials.supabase_s3[:access_key_id] %>
-  secret_access_key: <%= Rails.application.credentials.supabase_s3[:secret_access_key] %>
-  region: <%= Rails.application.credentials.supabase_s3[:region] %>
-  bucket: <%= Rails.application.credentials.supabase_s3[:bucket] %>
-  endpoint: <%= Rails.application.credentials.supabase_s3[:endpoint] %>
+  access_key_id: <%= Rails.application.credentials.s3[:access_key_id] %>
+  secret_access_key: <%= Rails.application.credentials.s3[:secret_access_key] %>
+  region: <%= Rails.application.credentials.s3[:region] %>
+  bucket: <%= Rails.application.credentials.s3[:bucket] %>
+  #endpoint: <%= Rails.application.credentials.s3[:endpoint] %>
 
   # The flags below often help with custom S3 endpoints
   force_path_style: true
