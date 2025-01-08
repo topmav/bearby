@@ -1,11 +1,13 @@
 module Admin
     class AgenciesController < ApplicationController
       def index
-        @agencies = Agency.includes(:projects).all
+        @agencies = Agency.includes(:projects)
+                         .with_attached_logo
+                         .all
       end
   
       def show
-        @agency = Agency.find(params[:id])
+        @agency = Agency.with_attached_logo.find(params[:id])
       end
   
       def new
