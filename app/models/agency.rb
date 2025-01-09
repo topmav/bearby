@@ -6,46 +6,55 @@ class Agency < ApplicationRecord
     has_many :projects, dependent: :destroy
 
 
-    has_one_attached :logo
+    has_one_attached :logo, dependent: :purge_later
   
-    # Add company size enums
+    COMPANY_SIZES = ["Very small", "Small", "Medium", "Large", "Very large"].freeze
+    
+    STATES = [
+      'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA',
+      'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD',
+      'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ',
+      'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC',
+      'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'
+    ].freeze
   
     # Validations
     validates :name,
               presence: true,
               length:   { minimum: 3 }
   
-    validate :website_must_be_valid, if: -> { website.present? }
+    validates :company_size, inclusion: { in: COMPANY_SIZES, allow_blank: true }
+    validates :zip_code, length: { is: 5, allow_blank: true }
+    validates :state, inclusion: { in: STATES, allow_blank: true }
   
-    # We’ll remove "http(s)://" and "www." from the website to store only the domain.
-    before_validation :normalize_website, if: -> { website.present? }
+  
+    # Callbacks
+    before_validation :clean_phone_number, if: -> { phone.present? }
+    before_validation :clean_zip_code, if: -> { zip_code.present? }
   
   
     private
   
-    def website_must_be_valid
-      # We’ll parse it as a full URL or domain. 
-      # If parsing fails, we add an error.
-      parsed_uri = begin
-        # If user typed “example.com” we can temporarily prepend "http://" to parse
-        URI.parse(website[/\Ahttps?:\/\//] ? website : "http://#{website}")
-      rescue URI::InvalidURIError
-        nil
-      end
-  
-      if parsed_uri.nil? || parsed_uri.host.blank?
-        errors.add(:website, "must be a valid URL or domain")
+    def clean_phone_number
+      # Remove everything except digits
+      self.phone = phone.gsub(/\D/, '')
+      
+      # Ensure it's exactly 10 digits
+      unless phone.length == 10
+        errors.add(:phone, "must be exactly 10 digits")
+        self.phone = nil
       end
     end
-  
-    def normalize_website
-      # Attempt to parse domain
-      uri = URI.parse(website[/\Ahttps?:\/\//] ? website : "http://#{website}")
-      # Remove leading 'www.' if present
-      domain_only = uri.host.sub(/\Awww\./i, "")
-      self.website = domain_only
-    rescue URI::InvalidURIError
-      # If invalid, set to nil (the validation above will catch it).
-      self.website = nil
+
+    def clean_zip_code
+      # Remove everything except digits
+      self.zip_code = zip_code.gsub(/\D/, '')
+      
+      # Ensure it's exactly 5 digits
+      unless zip_code.length == 5
+        errors.add(:zip_code, "must be exactly 5 digits")
+        self.zip_code = nil
+      end
     end
+
   end

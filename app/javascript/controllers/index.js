@@ -6,3 +6,6 @@ import { application } from "./application"
 
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
+
+import PhoneInputController from "./phone_input_controller"
+application.register("phone-input", PhoneInputController)

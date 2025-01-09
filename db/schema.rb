@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_07_231315) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_09_023920) do
   create_schema "auth"
   create_schema "cable"
   create_schema "cache"
@@ -127,6 +127,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_07_231315) do
     t.text "name"
     t.timestamptz "created_at", null: false
     t.timestamptz "updated_at", null: false
+    t.text "description"
+    t.text "svg_text"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

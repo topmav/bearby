@@ -1,8 +1,8 @@
 <%= form_with(model: [:admin, @agency], local: true) do |f| %>
   <% if @agency.errors.any? %>
-    <div class="bg-red-100 text-red-600 p-3 mb-4">
-      <p><%= pluralize(@agency.errors.count, "error") %> prohibited this agency from being saved:</p>
-      <ul>
+    <div class="bg-red-100 text-red-600 p-4 mb-6 rounded-lg">
+      <h3 class="font-semibold"><%= pluralize(@agency.errors.count, "error") %> prohibited this agency from being saved:</h3>
+      <ul class="list-disc ml-5 mt-2">
         <% @agency.errors.full_messages.each do |msg| %>
           <li><%= msg %></li>
         <% end %>
@@ -10,82 +10,188 @@
     </div>
   <% end %>
 
-  <div class="mb-4">
-    <%= f.label :name, class: "block text-sm font-medium text-gray-700" %>
-    <%= f.text_field :name, class: "mt-1 block w-full border-gray-300 rounded-md" %>
-  </div>
-
-  <div class="mb-4">
-    <%= f.label :address, class: "block text-sm font-medium text-gray-700" %>
-    <%= f.text_field :address, class: "mt-1 block w-full border-gray-300 rounded-md" %>
-  </div>
-
-  <div class="grid grid-cols-2 gap-4">
-    <div class="mb-4">
-      <%= f.label :city, class: "block text-sm font-medium text-gray-700" %>
-      <%= f.text_field :city, class: "mt-1 block w-full border-gray-300 rounded-md" %>
-    </div>
-
-    <div class="mb-4">
-      <%= f.label :state, class: "block text-sm font-medium text-gray-700" %>
-      <%= f.text_field :state, class: "mt-1 block w-full border-gray-300 rounded-md" %>
+  <div class="mb-6 flex justify-between items-center">
+    <h1 class="text-2xl font-semibold text-gray-900">New Agency</h1>
+    <div class="flex space-x-4">
+      <%= link_to "Cancel", admin_agencies_path, 
+          class: "rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" %>
+      <%= f.submit "Save Agency", 
+          class: "rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" %>
     </div>
   </div>
 
-  <div class="mb-4">
-    <%= f.label :zip_code, class: "block text-sm font-medium text-gray-700" %>
-    <%= f.text_field :zip_code, class: "mt-1 block w-full border-gray-300 rounded-md" %>
-  </div>
+  <!-- Two Column Layout for Basic Info and Contact -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+    <!-- Basic Information Card -->
+    <div class="overflow-hidden rounded-lg bg-white shadow">
+      <div class="px-4 py-5 sm:p-6">
+        <h2 class="text-xl font-semibold mb-6 text-gray-800 border-b pb-2">Basic Information</h2>
 
-  <div class="mb-4">
-    <%= f.label :company_size, class: "block text-sm font-medium text-gray-700" %>
-    <%= f.select :company_size, ["Small", "Medium", "Large"], {}, class: "mt-1 block w-full border-gray-300 rounded-md" %>
-  </div>
+        <div class="space-y-5">
+          <div>
+            <label for="agency_name" class="block text-sm/6 font-medium text-gray-900">Agency Name</label>
+            <div class="mt-2">
+              <%= f.text_field :name, class: "block w-full rounded-md bg-white py-1.5 px-3 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" %>
+            </div>
+          </div>
 
-  <div class="flex items-center mb-4">
-    <%= f.check_box :in_business, class: "mr-2" %>
-    <%= f.label :in_business, class: "text-sm font-medium text-gray-700" %>
-  </div>
+          <div>
+            <label for="agency_company_size" class="block text-sm/6 font-medium text-gray-900">Company Size</label>
+            <div class="relative mt-2">
+              <%= f.select :company_size,
+                          Agency::COMPANY_SIZES,
+                          { prompt: "Select company size" },
+                          class: "appearance-none block w-full rounded-md bg-white py-1.5 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" %>
+              <svg class="pointer-events-none absolute top-1/2 right-3 h-4 w-4 text-gray-500 -translate-y-1/2" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M4.22 5.97a.75.75 0 0 1 1.06 0L8 8.69l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.03a.75.75 0 0 1 0-1.06z" clip-rule="evenodd"/>
+              </svg>
+            </div>
+          </div>
 
-  <div class="flex items-center mb-4">
-    <%= f.check_box :full_service_agency, class: "mr-2" %>
-    <%= f.label :full_service_agency, class: "text-sm font-medium text-gray-700" %>
-  </div>
+          <div>
+            <label for="agency_logo" class="block text-sm/6 font-medium text-gray-900">Agency Logo</label>
+            <div class="mt-2">
+              <%= f.file_field :logo, class: "block w-full text-sm text-gray-900 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" %>
+              <p class="text-sm text-gray-500 mt-2">Logo must have a 2:1 aspect ratio</p>
+            </div>
+          </div>
 
-  <div class="mb-4">
-    <%= f.label :phone, class: "block text-sm font-medium text-gray-700" %>
-    <%= f.telephone_field :phone, class: "mt-1 block w-full border-gray-300 rounded-md" %>
-  </div>
-
-  <div class="mb-4">
-    <%= f.label :website, class: "block text-sm font-medium text-gray-700" %>
-    <%= f.url_field :website, class: "mt-1 block w-full border-gray-300 rounded-md" %>
-  </div>
-
-  <div class="mb-4">
-    <%= f.label :description, class: "block text-sm font-medium text-gray-700" %>
-    <%= f.text_area :description, rows: 3, class: "mt-1 block w-full border-gray-300 rounded-md" %>
-  </div>
-
-  <div class="grid grid-cols-2 gap-4">
-    <div class="mb-4">
-      <%= f.label :lat, class: "block text-sm font-medium text-gray-700" %>
-      <%= f.number_field :lat, step: :any, class: "mt-1 block w-full border-gray-300 rounded-md" %>
+          <div>
+            <label for="agency_description" class="block text-sm/6 font-medium text-gray-900">About the Agency</label>
+            <div class="mt-2">
+              <%= f.text_area :description, rows: 4, class: "block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" %>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="mb-4">
-      <%= f.label :long, class: "block text-sm font-medium text-gray-700" %>
-      <%= f.number_field :long, step: :any, class: "mt-1 block w-full border-gray-300 rounded-md" %>
+    <!-- Contact Information Card -->
+    <div class="overflow-hidden rounded-lg bg-white shadow">
+      <div class="px-4 py-5 sm:p-6">
+        <h2 class="text-xl font-semibold mb-6 text-gray-800 border-b pb-2">Contact Information</h2>
+        <div class="space-y-5">
+          <!-- Phone with leading icon -->
+          <div>
+            <label for="agency_phone" class="block text-sm/6 font-medium text-gray-900">Phone Number</label>
+            <div class="relative mt-2">
+              <%= f.text_field :phone,
+                class: "block w-full rounded-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6",
+                placeholder: "(555) 555-5555",
+                data: { controller: "phone-input" },
+                maxlength: 14,
+                id: "agency_phone" %>
+              <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Website with leading icon -->
+          <div>
+            <label for="agency_website" class="block text-sm/6 font-medium text-gray-900">Website URL</label>
+            <div class="relative mt-2 grid grid-cols-1">
+              <%= f.url_field :website,
+                class: "col-start-1 row-start-1 block w-full rounded-md bg-white py-1.5 pl-10 pr-3 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6",
+                id: "agency_website" %>
+              <svg class="pointer-events-none col-start-1 row-start-1 ml-3 h-5 w-5 self-center text-gray-400 sm:h-4 sm:w-4"
+                   viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd"/>
+              </svg>
+            </div>
+          </div>
+
+          <div>
+            <label for="agency_address" class="block text-sm/6 font-medium text-gray-900">Street Address</label>
+            <div class="mt-2">
+              <%= f.text_field :address, class: "block w-full rounded-md bg-white py-1.5 px-3 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" %>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label for="agency_city" class="block text-sm/6 font-medium text-gray-900">City</label>
+              <div class="mt-2">
+                <%= f.text_field :city, class: "block w-full rounded-md bg-white py-1.5 px-3 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" %>
+              </div>
+            </div>
+            <div>
+              <label for="agency_state" class="block text-sm/6 font-medium text-gray-900">State</label>
+              <div class="relative mt-2">
+                <%= f.select :state,
+                            Agency::STATES,
+                            { prompt: "Select state" },
+                            class: "appearance-none block w-full rounded-md bg-white py-1.5 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" %>
+                <svg class="pointer-events-none absolute top-1/2 right-3 h-4 w-4 text-gray-500 -translate-y-1/2" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M4.22 5.97a.75.75 0 0 1 1.06 0L8 8.69l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.03a.75.75 0 0 1 0-1.06z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <label for="agency_zip_code" class="block text-sm/6 font-medium text-gray-900">ZIP Code</label>
+            <div class="mt-2">
+              <%= f.text_field :zip_code, class: "block w-full rounded-md bg-white py-1.5 px-3 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" %>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="mb-4">
-    <%= f.label :logo, class: "block text-sm font-medium text-gray-700" %>
-    <%= f.file_field :logo, class: "mt-1 block" %>
-  </div>
+  <!-- Services Offered Card -->
+  <div class="mb-6">
+    <div class="overflow-hidden rounded-lg bg-white shadow">
+      <div class="px-4 py-5 sm:p-6">
+        <h2 class="text-xl font-semibold mb-6 text-gray-800 border-b pb-2">Services Offered</h2>
 
-  <div class="flex space-x-4">
-    <%= f.submit class: "bg-blue-600 text-white px-4 py-2 rounded" %>
-    <%= link_to "Back", admin_agencies_path, class: "bg-gray-200 text-black px-4 py-2 rounded" %>
+        <!-- Updated card-style checkboxes for Services -->
+        <h3 class="mb-5 text-lg font-medium text-gray-900">Choose Services:</h3>
+        <ul class="grid w-full gap-6 md:grid-cols-3">
+          <% Service.order(id: :asc).each do |service| %>
+            <li>
+              <%= f.check_box :service_ids,
+                  {
+                    multiple: true,
+                    checked: @agency.service_ids.include?(service.id),
+                    class: "hidden peer",
+                    id: "agency_service_ids_#{service.id}"
+                  },
+                  service.id,
+                  nil
+              %>
+
+              <label for="agency_service_ids_<%= service.id %>"
+                     class="inline-flex items-center justify-between w-full p-5 text-gray-500
+                            bg-white border-2 border-gray-200 rounded-lg cursor-pointer select-none
+                            peer-checked:border-blue-600
+                            hover:text-gray-600 peer-checked:text-gray-600
+                            hover:bg-gray-50">
+
+                <div class="block">
+                  <!-- Render the SVG stored in service.svg_text -->
+                  <div class="mb-2 w-7 h-7 text-sky-500" aria-hidden="true">
+                    <%= service.svg_text.html_safe if service.svg_text.present? %>
+                  </div>
+
+                  <!-- Service name -->
+                  <div class="w-full text-lg font-semibold">
+                    <%= service.name %>
+                  </div>
+
+                  <!-- Service description -->
+                  <div class="w-full text-sm">
+                    <%= service.description %>
+                  </div>
+                </div>
+              </label>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
   </div>
 <% end %>

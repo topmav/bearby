@@ -25,6 +25,9 @@ module Admin
   
       def edit
         @agency = Agency.find(params[:id])
+        response.headers["Cache-Control"] = "no-cache, no-store"
+        response.headers["Pragma"] = "no-cache"
+        response.headers["Expires"] = "Mon, 01 Jan 1990 00:00:00 GMT"
       end
   
       def update
@@ -34,6 +37,13 @@ module Admin
         else
           render :edit, status: :unprocessable_entity
         end
+      end
+  
+      def destroy
+        @agency = Agency.find(params[:id])
+        @agency.destroy
+        
+        redirect_to admin_agencies_path, notice: "Agency was successfully deleted."
       end
   
       private
@@ -53,7 +63,8 @@ module Admin
           :description,
           :lat,
           :long,
-          :logo
+          :logo,
+          service_ids: []
         )
       end
     end
