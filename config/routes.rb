@@ -6,7 +6,13 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   namespace :admin do
-    resources :agencies, except: [:destroy]
+    resources :agencies, except: [:destroy] do
+      member do
+        get :projects
+        get :leads
+        get :subscription
+      end
+    end
   end
 
   # Defines the root path route ("/")

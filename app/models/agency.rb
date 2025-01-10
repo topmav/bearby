@@ -8,7 +8,7 @@ class Agency < ApplicationRecord
 
     has_one_attached :logo, dependent: :purge_later
   
-    COMPANY_SIZES = ["Very small", "Small", "Medium", "Large", "Very large"].freeze
+    COMPANY_SIZES = ["Solo/Freelancer", "Small", "Medium", "Large", "Very large"].freeze
     
     STATES = [
       'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA',

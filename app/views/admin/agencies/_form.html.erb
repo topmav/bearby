@@ -10,14 +10,9 @@
     </div>
   <% end %>
 
-  <div class="mb-6 flex justify-between items-center">
-    <h1 class="text-2xl font-semibold text-gray-900">New Agency</h1>
-    <div class="flex space-x-4">
-      <%= link_to "Cancel", admin_agencies_path, 
-          class: "rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" %>
-      <%= f.submit "Save Agency", 
-          class: "rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" %>
-    </div>
+  <div class="mb-6 flex justify-end">
+    <%= f.submit "Save", 
+        class: "rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" %>
   </div>
 
   <!-- Two Column Layout for Basic Info and Contact -->
@@ -50,9 +45,16 @@
 
           <div>
             <label for="agency_logo" class="block text-sm/6 font-medium text-gray-900">Agency Logo</label>
-            <div class="mt-2">
-              <%= f.file_field :logo, class: "block w-full text-sm text-gray-900 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" %>
-              <p class="text-sm text-gray-500 mt-2">Logo must have a 2:1 aspect ratio</p>
+            <div class="mt-2 grid grid-cols-2 gap-4 items-center">
+              <div>
+                <%= f.file_field :logo, class: "block w-full text-sm text-gray-900 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" %>
+                <p class="text-sm text-gray-500 mt-2">Logo must have a 2:1 aspect ratio</p>
+              </div>
+              <% if @agency.logo.attached? %>
+                <div class="flex justify-end">
+                  <%= image_tag @agency.logo, class: "h-16 object-contain bg-gray-50 rounded-lg border border-gray-200" %>
+                </div>
+              <% end %>
             </div>
           </div>
 
@@ -110,14 +112,14 @@
             </div>
           </div>
 
-          <div class="grid grid-cols-2 gap-4">
-            <div>
+          <div class="grid grid-cols-12 gap-4">
+            <div class="col-span-5">
               <label for="agency_city" class="block text-sm/6 font-medium text-gray-900">City</label>
               <div class="mt-2">
                 <%= f.text_field :city, class: "block w-full rounded-md bg-white py-1.5 px-3 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" %>
               </div>
             </div>
-            <div>
+            <div class="col-span-4">
               <label for="agency_state" class="block text-sm/6 font-medium text-gray-900">State</label>
               <div class="relative mt-2">
                 <%= f.select :state,
@@ -129,12 +131,11 @@
                 </svg>
               </div>
             </div>
-          </div>
-
-          <div>
-            <label for="agency_zip_code" class="block text-sm/6 font-medium text-gray-900">ZIP Code</label>
-            <div class="mt-2">
-              <%= f.text_field :zip_code, class: "block w-full rounded-md bg-white py-1.5 px-3 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" %>
+            <div class="col-span-3">
+              <label for="agency_zip_code" class="block text-sm/6 font-medium text-gray-900">ZIP Code</label>
+              <div class="mt-2">
+                <%= f.text_field :zip_code, class: "block w-full rounded-md bg-white py-1.5 px-3 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" %>
+              </div>
             </div>
           </div>
         </div>
@@ -149,10 +150,9 @@
         <h2 class="text-xl font-semibold mb-6 text-gray-800 border-b pb-2">Services Offered</h2>
 
         <!-- Updated card-style checkboxes for Services -->
-        <h3 class="mb-5 text-lg font-medium text-gray-900">Choose Services:</h3>
-        <ul class="grid w-full gap-6 md:grid-cols-3">
+        <ul class="grid w-full gap-4 md:grid-cols-3">
           <% Service.order(id: :asc).each do |service| %>
-            <li>
+            <li class="h-full">
               <%= f.check_box :service_ids,
                   {
                     multiple: true,
@@ -165,20 +165,20 @@
               %>
 
               <label for="agency_service_ids_<%= service.id %>"
-                     class="inline-flex items-center justify-between w-full p-5 text-gray-500
+                     class="inline-flex items-center justify-between w-full h-full p-5 text-gray-500
                             bg-white border-2 border-gray-200 rounded-lg cursor-pointer select-none
                             peer-checked:border-blue-600
                             hover:text-gray-600 peer-checked:text-gray-600
                             hover:bg-gray-50">
 
-                <div class="block">
+                <div class="block w-full">
                   <!-- Render the SVG stored in service.svg_text -->
-                  <div class="mb-2 w-7 h-7 text-sky-500" aria-hidden="true">
+                  <div class="mb-2 w-6 h-6 text-sky-500" aria-hidden="true">
                     <%= service.svg_text.html_safe if service.svg_text.present? %>
                   </div>
 
                   <!-- Service name -->
-                  <div class="w-full text-lg font-semibold">
+                  <div class="w-full text-md font-semibold">
                     <%= service.name %>
                   </div>
 
