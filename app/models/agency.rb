@@ -26,6 +26,7 @@ class Agency < ApplicationRecord
     validates :company_size, inclusion: { in: COMPANY_SIZES, allow_blank: true }
     validates :zip_code, length: { is: 5, allow_blank: true }
     validates :state, inclusion: { in: STATES, allow_blank: true }
+    validates :website, format: { with: URI::DEFAULT_PARSER.make_regexp(%w[http https]), message: "Please enter a valid URL", allow_blank: true }
   
   
     # Callbacks

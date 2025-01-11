@@ -1,14 +1,4 @@
 <%= render "admin/agencies/admin_nav_layout" do %>
-  <% if flash[:notice].present? %>
-    <div class="bg-green-100 text-green-800 p-2 rounded mb-4">
-      <%= flash[:notice] %>
-    </div>
-  <% end %>
-  <% if flash[:alert].present? %>
-    <div class="bg-red-100 text-red-800 p-2 rounded mb-4">
-      <%= flash[:alert] %>
-    </div>
-  <% end %>
 
   <%= render partial: "form", locals: { agency: @agency } %>
 <% end %>
