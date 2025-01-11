@@ -20,7 +20,7 @@ module Admin
     def update
       @agency = Agency.find(params[:id])
       if @agency.update(agency_params)
-        flash[:notice] = "Saved"
+        flash[:notice] = "Agency info updated successfully."
         redirect_to edit_admin_agency_path(@agency)
       else
         render :edit_tab, status: :unprocessable_entity

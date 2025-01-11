@@ -10,7 +10,7 @@
     </div>
   <% end %>
 
-  <div class="mb-6 flex justify-end items-center gap-4">
+  <div class="mb-6 flex justify-between items-center gap-4">
     <% if flash[:notice] %>
       <div class="text-green-600 items-center gap-1 inline-flex animate-fade-out">
         <svg class="w-5 h-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
@@ -18,6 +18,8 @@
         </svg>
         <%= flash[:notice] %>
       </div>
+    <% else %>
+      <div></div>
     <% end %>
     <%= f.submit "Save", 
         class: "rounded-md bg-indigo-600 px-8 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 cursor-pointer" %>
@@ -42,7 +44,13 @@
             <label for="agency_company_size" class="block text-sm/6 font-medium text-gray-900">Company Size</label>
             <div class="relative mt-2">
               <%= f.select :company_size,
-                          Agency::COMPANY_SIZES,
+                          [
+                            ["Solo/Freelancer", "Solo/Freelancer"],
+                            ["Small (2-10 employees)", "Small"],
+                            ["Medium (11-50 employees)", "Medium"],
+                            ["Large (51-200 employees)", "Large"],
+                            ["Very large (200+ employees)", "Very large"]
+                          ],
                           { prompt: "Select company size" },
                           class: "appearance-none block w-full rounded-md bg-white py-1.5 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" %>
               <svg class="pointer-events-none absolute top-1/2 right-3 h-4 w-4 text-gray-500 -translate-y-1/2" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
