@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_09_023920) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_11_035246) do
   create_schema "auth"
   create_schema "cable"
   create_schema "cache"
@@ -95,6 +95,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_09_023920) do
     t.text "name"
     t.timestamptz "created_at", null: false
     t.timestamptz "updated_at", null: false
+    t.text "description"
   end
 
   create_table "project_services", force: :cascade do |t|
