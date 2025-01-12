@@ -18,6 +18,26 @@ module Admin
       end
     end
 
+    def edit
+      @project = @agency.projects.find(params[:id])
+      respond_to do |format|
+        format.html
+        format.turbo_stream
+      end
+    end
+
+    def update
+      @project = @agency.projects.find(params[:id])
+      respond_to do |format|
+        if @project.update(project_params)
+          format.turbo_stream
+        else
+          format.html { render :edit, status: :unprocessable_entity }
+          format.turbo_stream { render :edit, status: :unprocessable_entity }
+        end
+      end
+    end
+
     def destroy
       @project = Project.find(params[:id])
       @project.destroy

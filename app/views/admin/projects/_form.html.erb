@@ -1,4 +1,6 @@
-<%= form_with(model: project, url: admin_agency_projects_path(@agency), class: "space-y-6") do |f| %>
+<%= form_with(model: project,
+               url: project.persisted? ? admin_agency_project_path(@agency, project) : admin_agency_projects_path(@agency),
+               class: "space-y-6") do |f| %>
   <% if project.errors.any? %>
     <div class="rounded-md bg-red-50 p-4">
       <div class="flex">

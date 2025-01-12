@@ -19,7 +19,7 @@ Rails.application.routes.draw do
       end
 
       # Add a nested resource for projects
-      resources :projects, only: [:new, :create, :destroy]
+      resources :projects, only: [:new, :create, :destroy, :edit, :update]
     end
   end
 

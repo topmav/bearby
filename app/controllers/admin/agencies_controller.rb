@@ -31,6 +31,7 @@ module Admin
     # Placeholder actions
     def projects
       @agency = Agency.find_by!(uuid: params[:id])
+      @projects = @agency.projects.order(updated_at: :desc)
       render :projects
     end
 
