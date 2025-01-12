@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_12_120000) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_12_180059) do
   create_schema "auth"
   create_schema "cable"
   create_schema "cache"
@@ -91,6 +91,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_12_120000) do
     t.index ["agency_id", "service_id"], name: "index_agency_services_on_agency_id_and_service_id", unique: true
     t.index ["agency_id"], name: "index_agency_services_on_agency_id"
     t.index ["service_id"], name: "index_agency_services_on_service_id"
+  end
+
+  create_table "do_not_sells", force: :cascade do |t|
+    t.text "first_name", null: false
+    t.text "last_name", null: false
+    t.text "email", null: false
+    t.text "phone"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "industries", force: :cascade do |t|

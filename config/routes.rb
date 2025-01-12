@@ -4,6 +4,12 @@ Rails.application.routes.draw do
   # Reveal health status on /up...
   get "up" => "rails/health#show", as: :rails_health_check
 
+  # Legal pages
+  get 'privacy-policy', to: 'pages#privacy_policy', as: :privacy_policy
+  get 'terms-of-use', to: 'pages#terms_of_use', as: :terms_of_use
+  get 'do-not-sell', to: 'pages#do_not_sell', as: :do_not_sell
+  post 'do-not-sell', to: 'pages#create_do_not_sell'
+
   namespace :admin do
     resources :agencies, except: [:destroy] do
       member do

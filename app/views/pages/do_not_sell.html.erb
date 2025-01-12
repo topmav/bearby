@@ -1,0 +1,133 @@
+<% content_for :title, "Do Not Sell My Personal Information - Bearby" %>
+<% content_for :meta_description, "Submit a request to opt out of the sale of your personal information." %>
+
+<%# Hero Section %>
+<section class="bg-gray-100 py-8 px-4 text-center">
+  <h1 class="text-3xl font-bold mb-2 font-['Source_Serif_4']">
+    Do Not Sell My Personal Information
+  </h1>
+  <p class="text-gray-600 font-['Poppins'] mb-4">
+    We respect your privacy rights and offer you control over your personal information.
+  </p>
+</section>
+
+<div class="mx-auto px-4 py-8 max-w-7xl md:flex md:space-x-8">
+  <%# Main Content (Left 2/3) %>
+  <div class="md:w-2/3">
+    <div class="prose prose-blue max-w-none">
+
+      <p class="mb-4 text-sm text-gray-500">
+        Last Updated: <strong>01-12-2025</strong>
+      </p>
+
+      <h2 class="text-2xl font-bold mb-4 font-['Source_Serif_4']">
+        Your Rights
+      </h2>
+
+      <p>
+        Under certain laws (e.g., CCPA), residents of specific jurisdictions have the right to:
+      </p>
+      <ul class="list-disc pl-6 mb-6">
+        <li>Know what personal information is collected about them</li>
+        <li>Know whether their personal information is sold or disclosed, and to whom</li>
+        <li>Opt out of the sale of their personal information</li>
+        <li>Access their personal information</li>
+        <li>Request deletion of their personal information</li>
+        <li>Not be discriminated against for exercising their rights</li>
+      </ul>
+
+      <h2 class="text-2xl font-bold mb-4 font-['Source_Serif_4']">
+        What Happens Next?
+      </h2>
+      <p>
+        After submitting your request:
+      </p>
+      <ul class="list-disc pl-6 mb-6">
+        <li>We will verify your identity to protect your privacy</li>
+        <li>You will receive a confirmation email</li>
+        <li>We will process your request within 45 days</li>
+        <li>If we need more time (up to 90 days), we will inform you in writing</li>
+      </ul>
+
+      <h2 class="text-2xl font-bold mb-4 font-['Source_Serif_4']">
+        Additional Information
+      </h2>
+      <p class="mb-6">
+        Bearby connects prospective Clients with marketing agencies by transmitting 
+        limited personal data (e.g., name, email, phone, company name, website, location) 
+        to agencies as leads. If you opt out of the "sale" of personal information, 
+        we will refrain from sending your data to agencies unless you provide new consent.
+      </p>
+
+    </div>
+  </div>
+
+  <%# Form Section (Right 1/3) — optional form block if you use a form for do-not-sell requests %>
+  <div class="md:w-1/3 mt-8 md:mt-0">
+    <div class="bg-white rounded-lg p-8">
+      <h2 class="text-2xl font-semibold mb-6 font-['Source_Serif_4']">
+        Submit Your Request
+      </h2>
+      
+      <%= form_with model: @do_not_sell || DoNotSell.new, url: do_not_sell_path, local: true, class: "space-y-6" do |f| %>
+        <% if flash[:success] %>
+          <div class="bg-green-50 text-green-500 p-4 rounded mb-4">
+            <%= flash[:success] %>
+          </div>
+        <% end %>
+
+        <!-- Name Fields -->
+        <div class="grid grid-cols-1 gap-6">
+          <div>
+            <%= f.label :first_name, class: "block text-sm font-medium text-gray-700 mb-1" %>
+            <%= f.text_field :first_name,
+                class: "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500",
+                placeholder: "John" %>
+            <% if f.object.errors[:first_name].any? %>
+              <p class="mt-1 text-sm text-red-600"><%= f.object.errors[:first_name].join(', ') %></p>
+            <% end %>
+          </div>
+
+          <div>
+            <%= f.label :last_name, class: "block text-sm font-medium text-gray-700 mb-1" %>
+            <%= f.text_field :last_name,
+                class: "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500",
+                placeholder: "Doe" %>
+            <% if f.object.errors[:last_name].any? %>
+              <p class="mt-1 text-sm text-red-600"><%= f.object.errors[:last_name].join(', ') %></p>
+            <% end %>
+          </div>
+        </div>
+
+        <!-- Contact Fields -->
+        <div>
+          <%= f.label :email, class: "block text-sm font-medium text-gray-700 mb-1" %>
+          <%= f.email_field :email,
+              class: "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500",
+              placeholder: "john@example.com" %>
+          <% if f.object.errors[:email].any? %>
+            <p class="mt-1 text-sm text-red-600"><%= f.object.errors[:email].join(', ') %></p>
+          <% end %>
+        </div>
+
+        <div>
+          <%= f.label :phone, class: "block text-sm font-medium text-gray-700 mb-1" do %>
+            Phone <span class="text-gray-500 font-normal">(optional)</span>
+          <% end %>
+          <%= f.telephone_field :phone,
+              class: "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500",
+              placeholder: "(555) 123-4567" %>
+          <% if f.object.errors[:phone].any? %>
+            <p class="mt-1 text-sm text-red-600"><%= f.object.errors[:phone].join(', ') %></p>
+          <% end %>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="pt-4">
+          <%= f.submit "Submit Request",
+              class: "w-full bg-blue-600 text-white py-3 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
