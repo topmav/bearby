@@ -1,4 +1,8 @@
 class Agency < ApplicationRecord
+    # Use UUID for URLs instead of ID
+    def to_param
+      uuid
+    end
 
     # Associations
     has_many :agency_services, dependent: :destroy

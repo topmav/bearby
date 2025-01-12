@@ -1,7 +1,7 @@
 module Admin
     class ProjectsController < ApplicationController
       def destroy
-        @agency = Agency.find(params[:agency_id])
+        @agency = Agency.find_by!(uuid: params[:agency_id])
         @project = @agency.projects.find(params[:id])
         @project.destroy
         flash[:notice] = "Project was successfully deleted."

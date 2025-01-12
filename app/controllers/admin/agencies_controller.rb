@@ -8,7 +8,7 @@ module Admin
 
     # Replaces 'show' with a tab-based edit interface
     def show
-      @agency = Agency.with_attached_logo.find(params[:id])
+      @agency = Agency.with_attached_logo.find_by!(uuid: params[:id])
       render :edit_tab
     end
 
@@ -18,7 +18,7 @@ module Admin
     end
 
     def update
-      @agency = Agency.find(params[:id])
+      @agency = Agency.find_by!(uuid: params[:id])
       if @agency.update(agency_params)
         flash[:notice] = "Agency info updated successfully."
         redirect_to edit_admin_agency_path(@agency)
@@ -29,17 +29,17 @@ module Admin
 
     # Placeholder actions for the new tabs
     def projects
-      @agency = Agency.find(params[:id])
+      @agency = Agency.find_by!(uuid: params[:id])
       render :projects
     end
 
     def leads
-      @agency = Agency.find(params[:id])
+      @agency = Agency.find_by!(uuid: params[:id])
       render :leads
     end
 
     def subscription
-      @agency = Agency.find(params[:id])
+      @agency = Agency.find_by!(uuid: params[:id])
       render :subscription
     end
 

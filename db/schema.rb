@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_11_035246) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_11_235910) do
   create_schema "auth"
   create_schema "cable"
   create_schema "cache"
@@ -79,6 +79,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_11_035246) do
     t.decimal "long", precision: 10, scale: 6
     t.timestamptz "created_at", null: false
     t.timestamptz "updated_at", null: false
+    t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
+    t.index ["uuid"], name: "index_agencies_on_uuid", unique: true
   end
 
   create_table "agency_services", force: :cascade do |t|
