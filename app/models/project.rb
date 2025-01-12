@@ -6,5 +6,8 @@ class Project < ApplicationRecord
     has_many :services, through: :project_services
   
     has_many_attached :media
+
+    validates :title, presence: true
+    scope :ordered, -> { order(created_at: :desc) }
   
   end

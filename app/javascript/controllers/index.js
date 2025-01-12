@@ -9,3 +9,6 @@ application.register("hello", HelloController)
 
 import PhoneInputController from "./phone_input_controller"
 application.register("phone-input", PhoneInputController)
+
+import ModalController from "./modal_controller"
+application.register("modal", ModalController)

@@ -18,8 +18,8 @@ Rails.application.routes.draw do
         get :subscription
       end
 
-      # Add a nested resource for projects with destroy
-      resources :projects, only: [:destroy]
+      # Add a nested resource for projects
+      resources :projects, only: [:new, :create, :destroy]
     end
   end
 

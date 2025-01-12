@@ -1,0 +1,6 @@
+<%= turbo_stream.prepend "projects" do %>
+  <%= render "admin/projects/project", project: @project %>
+<% end %>
+<%= turbo_stream.update "modal" do %>
+  <turbo-frame id="modal"></turbo-frame>
+<% end %>
