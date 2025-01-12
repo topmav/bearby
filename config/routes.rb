@@ -19,4 +19,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "pages#index"
+
+  # Devise routes for user authentication
+  devise_for :users
 end

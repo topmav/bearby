@@ -1,9 +1,11 @@
 module Admin
   class AgenciesController < ApplicationController
+    before_action :authenticate_user!
+    before_action :ensure_admin, only: [:index]
+    before_action :ensure_user_agency_match, only: [:show, :edit, :update, :projects, :leads, :subscription]
+
     def index
-      @agencies = Agency.includes(:projects)
-                        .with_attached_logo
-                        .all
+      @agencies = Agency.includes(:projects).with_attached_logo.all
     end
 
     # Replaces 'show' with a tab-based edit interface
@@ -12,7 +14,6 @@ module Admin
       render :edit_tab
     end
 
-    # Old edit now redirects
     def edit
       redirect_to admin_agency_path(params[:id])
     end
@@ -27,7 +28,7 @@ module Admin
       end
     end
 
-    # Placeholder actions for the new tabs
+    # Placeholder actions
     def projects
       @agency = Agency.find_by!(uuid: params[:id])
       render :projects
@@ -78,6 +79,19 @@ module Admin
         :logo,
         service_ids: []
       )
+    end
+
+    def ensure_user_agency_match
+      return if current_user.admin?  # Admin can access any agency
+      if current_user.agency.nil? || current_user.agency.uuid != params[:id]
+        raise ActiveRecord::RecordNotFound
+      end
+    end
+
+    def ensure_admin
+      unless current_user.admin?
+        redirect_to admin_agency_path(current_user.agency.uuid), alert: "You are not authorized to view that page."
+      end
     end
   end
 end
