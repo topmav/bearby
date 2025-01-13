@@ -5,7 +5,7 @@ module Admin
     before_action :ensure_user_agency_match, only: [:show, :edit, :update, :projects, :leads, :subscription]
 
     def index
-      @agencies = Agency.includes(:projects).with_attached_logo.all
+      @agencies = Agency.all.includes(:projects).with_attached_logo
     end
 
     # Replaces 'show' with a tab-based edit interface
@@ -31,7 +31,7 @@ module Admin
     # Placeholder actions
     def projects
       @agency = Agency.find_by!(uuid: params[:id])
-      @projects = @agency.projects.order(updated_at: :desc)
+      @projects = @agency.projects.includes(:industry).order(updated_at: :desc)
       render :projects
     end
 

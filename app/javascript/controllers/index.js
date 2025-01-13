@@ -12,3 +12,6 @@ application.register("phone-input", PhoneInputController)
 
 import ModalController from "./modal_controller"
 application.register("modal", ModalController)
+
+import ToggleController from "./toggle_controller"
+application.register("toggle", ToggleController)
