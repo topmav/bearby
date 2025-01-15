@@ -77,7 +77,7 @@
           <div>
             <label for="agency_description" class="block text-sm/6 font-medium text-gray-900">About the Agency</label>
             <div class="mt-2">
-              <%= f.text_area :description, rows: 4, class: "block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" %>
+              <%= f.text_area :description, rows: 4, class: "block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6", placeholder: "Tell us about your agency's expertise, values, and what makes you unique. Include your specialties and the types of clients you serve best. This is very important in the algorithmic matching with your ICPs." %>
             </div>
           </div>
         </div>
@@ -163,7 +163,10 @@
   <div class="mb-6">
     <div class="overflow-hidden rounded-lg bg-white shadow">
       <div class="px-4 py-5 sm:p-6">
-        <h2 class="text-xl font-semibold mb-6 text-gray-800 border-b pb-2">Services Offered</h2>
+        <div class="flex items-center gap-3 mb-6 border-b pb-2">
+          <h2 class="text-xl font-semibold text-gray-800">Services Offered</h2>
+          <p class="text-sm text-gray-600">- These services will be used to match you with potential clients</p>
+        </div>
 
         <!-- Updated card-style checkboxes for Services -->
         <ul class="grid w-full gap-4 md:grid-cols-3">

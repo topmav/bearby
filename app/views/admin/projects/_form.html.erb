@@ -32,7 +32,7 @@
 
     <div class="grid grid-cols-2 gap-6">
       <div>
-        <%= f.label :client, class: "block text-sm/6 font-medium text-gray-900" %>
+        <%= f.label "Client Name", class: "block text-sm/6 font-medium text-gray-900" %>
         <%= f.text_field :client, class: "block w-full rounded-md bg-white py-1.5 px-3 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" %>
       </div>
 
@@ -65,23 +65,23 @@
 
       <div data-toggle-target="element" class="<%= 'hidden' unless f.object.anonymize_client %>">
         <%= f.label :anonymous_client_name, "Public Client Name", class: "block text-sm/6 font-medium text-gray-900" %>
-        <%= f.text_field :anonymous_client_name, class: "block w-full rounded-md bg-white py-1.5 px-3 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" %>
+        <%= f.text_field :anonymous_client_name, class: "block w-full rounded-md bg-white py-1.5 px-3 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6", placeholder: "E.g. Major agricultural supplier" %>
       </div>
     </div>
 
     <div>
       <%= f.label :description, class: "block text-sm/6 font-medium text-gray-900" %>
-      <%= f.text_area :description, rows: 4, class: "block w-full rounded-md bg-white py-1.5 px-3 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" %>
+      <%= f.text_area :description, rows: 4, class: "block w-full rounded-md bg-white py-1.5 px-3 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6", placeholder: "Describe the project's goals, challenges, and approach. What made this project unique? What problems did your agency solve?" %>
     </div>
 
     <div>
       <%= f.label :outcome, class: "block text-sm/6 font-medium text-gray-900" %>
-      <%= f.text_area :outcome, rows: 3, class: "block w-full rounded-md bg-white py-1.5 px-3 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" %>
+      <%= f.text_area :outcome, rows: 3, class: "block w-full rounded-md bg-white py-1.5 px-3 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6", placeholder: "What were the measurable results and benefits delivered? Include specific metrics or improvements achieved." %>
     </div>
 
     <div class="grid grid-cols-2 gap-6">
       <div>
-        <h3 class="text-sm font-medium text-gray-900 mb-2">Services</h3>
+        <h3 class="text-sm font-medium text-gray-900 mb-2">Which services does this project demonstrate?</h3>
         <div class="mt-2 space-y-2">
           <%= f.collection_check_boxes :service_ids, Service.order(:name), :id, :name do |b| %>
             <div class="relative flex items-start">
