@@ -12,3 +12,6 @@ application.register("modal", ModalController)
 
 import ToggleController from "./toggle_controller"
 application.register("toggle", ToggleController)
+
+import FlashController from "./flash_controller"
+application.register("flash", FlashController)

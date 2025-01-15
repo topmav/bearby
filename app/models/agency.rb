@@ -32,6 +32,17 @@ class Agency < ApplicationRecord
   validates :state, inclusion: { in: STATES, allow_blank: true }
   validates :website, format: { with: URI::DEFAULT_PARSER.make_regexp(%w[http https]), message: "Please enter a valid URL", allow_blank: true }
 
+  # Format phone number for display
+  def formatted_phone
+    return nil if phone.blank?
+    
+    # Remove any non-digits
+    digits = phone.gsub(/\D/, '')
+    return nil if digits.length != 10
+    
+    "(#{digits[0,3]}) #{digits[3,3]}-#{digits[6,4]}"
+  end
+
   # Callbacks
   before_validation :clean_phone_number, if: -> { phone.present? }
   before_validation :clean_zip_code, if: -> { zip_code.present? }

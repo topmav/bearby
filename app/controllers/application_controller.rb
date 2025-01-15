@@ -10,4 +10,10 @@ class ApplicationController < ActionController::Base
       admin_agency_path(resource.agency.uuid)
     end
   end
+
+  private
+
+  def render_flash
+    render turbo_stream: turbo_stream.update("flash", partial: "shared/flash")
+  end
 end

@@ -21,10 +21,11 @@ module Admin
     def update
       @agency = Agency.find_by!(uuid: params[:id])
       if @agency.update(agency_params)
-        flash[:notice] = "Agency info updated successfully."
-        redirect_to edit_admin_agency_path(@agency)
+        flash.now[:notice] = "Agency info updated successfully."
+        render_flash
       else
-        render :edit_tab, status: :unprocessable_entity
+        flash.now[:alert] = format_error_messages(@agency)
+        render_flash
       end
     end
 
@@ -52,11 +53,11 @@ module Admin
     def create
       @agency = Agency.new(agency_params)
       if @agency.save
-        flash[:notice] = "Agency created successfully."
-        redirect_to admin_agency_path(@agency)
+        flash.now[:notice] = "Agency created successfully."
+        render_flash
       else
-        flash[:alert] = "Error creating agency. See form for details."
-        render :new
+        flash.now[:alert] = format_error_messages(@agency)
+        render_flash
       end
     end
 
@@ -93,6 +94,16 @@ module Admin
       unless current_user.admin?
         redirect_to admin_agency_path(current_user.agency.uuid), alert: "You are not authorized to view that page."
       end
+    end
+
+    def format_error_messages(record)
+      return unless record.errors.any?
+      
+      messages = record.errors.full_messages
+      count = messages.size
+      error_text = "#{count} #{count == 1 ? 'error' : 'errors'} occurred:"
+      
+      [error_text, *messages].join("\n• ")
     end
   end
 end
